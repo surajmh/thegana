@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { parseAddresses, removeAddress, updateAddress, validateAddress } from '../src/utils/records.ts';
-import { openRide, rideApps, rideLink, rideProviders } from '../src/utils/rideshare.ts';
-import { isLanguage, languages, messages, resolveLanguage, translate } from '../src/i18n/messages.ts';
+import { normalizeRideProviders, openRide, parseRidePreferences, rideApps, rideLink, rideProviders } from '../src/utils/rideshare.ts';
+import { isLanguage, languageDirection, languages, messages, resolveLanguage, translate } from '../src/i18n/messages.ts';
 import fs from 'node:fs';
 
 const record = { id: '1', name: 'घर', address: '123 Main Street, Kathmandu' };
@@ -92,15 +92,17 @@ for (const [provider, app] of Object.entries(rideApps)) {
   const iosCalls = [];
   await openRide(provider, destination, async () => true,
     async url => { iosCalls.push(url); }, 'ios');
-  assert.deepEqual(iosCalls, [app.iosLink]);
+  assert.deepEqual(iosCalls, [app.iosLink ?? app.appStore]);
 
   const iosFallbackCalls = [];
   await openRide(provider, destination, async () => true,
     async url => {
       iosFallbackCalls.push(url);
-      if (url === app.iosLink) throw new Error('App link unavailable');
+      if (app.iosLink && url === app.iosLink) throw new Error('App link unavailable');
     }, 'ios');
-  assert.deepEqual(iosFallbackCalls, [app.iosLink, app.appStore]);
+  assert.deepEqual(iosFallbackCalls, app.iosLink ? [app.iosLink, app.appStore] : [app.appStore]);
+  await assert.rejects(openRide(provider, destination, async () => true,
+    async () => { throw new Error('Store unavailable'); }, 'ios'));
 }
 for (const platform of ['android', 'ios']) {
   const calls = [];
@@ -119,7 +121,7 @@ console.log('Installed-app launch and Android/iOS store fallback checks passed.'
 
 const keys = Object.keys(messages.en).sort();
 const placeholders = text => [...text.matchAll(/\{(\w+)\}/g)].map(match => match[1]).sort();
-assert.equal(languages.length, 8);
+assert.deepEqual(languages.map(({ code }) => code), ['ne', 'en', 'hi', 'es', 'vi', 'km', 'ur', 'bn', 'ta', 'si', 'pa']);
 const nativeConfig = JSON.parse(fs.readFileSync(new URL('../app.json', import.meta.url), 'utf8')).expo;
 for (const { code } of languages) {
   assert.ok(isLanguage(code));
@@ -128,8 +130,8 @@ for (const { code } of languages) {
   for (const key of keys) {
     assert.ok(messages[code][key].trim(), `${code}.${key} must not be empty`);
     assert.deepEqual(placeholders(messages[code][key]), placeholders(messages.en[key]), `${code}.${key} placeholders`);
-    const translated = translate(code, key, { name: 'घर & 東京', provider: 'Uber' });
-    assert.ok(!/\{(name|provider)\}/.test(translated), `${code}.${key} must interpolate values`);
+    const translated = translate(code, key, { name: 'घर & 東京', provider: 'Uber', step: '1', total: '2' });
+    assert.ok(!/\{(name|provider|step|total)\}/.test(translated), `${code}.${key} must interpolate values`);
   }
   const native = JSON.parse(fs.readFileSync(new URL(`../assets/locales/${code}.json`, import.meta.url), 'utf8'));
   assert.equal(native.android.app_name, messages[code].appTitle);
@@ -139,10 +141,34 @@ for (const { code } of languages) {
 }
 assert.equal(isLanguage('xx'), false);
 assert.equal(isLanguage(null), false);
-assert.equal(resolveLanguage(['de-DE', 'fr-CA', 'ja-JP']), 'fr');
+assert.equal(resolveLanguage(['de-DE', 'vi-VN', 'km-KH']), 'vi');
+assert.equal(resolveLanguage(['fr-CA', 'ja-JP']), 'en');
+assert.equal(isLanguage('ru'), false);
+assert.equal(languageDirection('ur'), 'rtl');
+for (const { code } of languages.filter(({ code }) => code !== 'ur')) assert.equal(languageDirection(code), 'ltr');
+assert.deepEqual(nativeConfig.plugins.find(plugin => plugin[0] === 'expo-localization')[1], {
+  supportedLocales: languages.map(({ code }) => code), supportsRTL: true,
+});
 assert.equal(resolveLanguage(['NE_np']), 'ne');
 assert.equal(resolveLanguage([null, 'de-DE']), 'en');
 assert.equal(resolveLanguage([]), 'en');
 assert.equal(translate('unknown', 'save'), messages.en.save);
 assert.equal(translate('en', 'deleteMessage', { name: 'घर {provider} $&' }), '“घर {provider} $&” cannot be recovered after deleting.');
-console.log('All eight translation catalogs, locale matching, interpolation, fallback, and native locale resources passed.');
+console.log('All translation catalogs, locale matching, interpolation, fallback, and native locale resources passed.');
+
+assert.deepEqual(rideProviders.slice(0, 4), ['Uber', 'Pathao', 'inDrive', 'Yango']);
+assert.deepEqual(rideProviders.slice(4), ['Ola', 'Rapido', 'Grab', 'Gojek', 'Careem']);
+assert.deepEqual(normalizeRideProviders(['Careem', 'Uber', 'Careem', 'unknown', null]), ['Uber', 'Careem']);
+assert.deepEqual(normalizeRideProviders('Uber'), []);
+for (const raw of [null, '{bad', '[]', '{}', '{"version":2,"providers":["Uber"]}', '{"version":1,"providers":[]}', '{"version":1,"providers":["unknown"]}']) {
+  assert.equal(parseRidePreferences(raw), null);
+}
+const storedPreferences = { version: 1, providers: ['Uber', 'Pathao', 'Rapido'] };
+assert.deepEqual(parseRidePreferences(JSON.stringify(storedPreferences)), storedPreferences);
+assert.deepEqual(parseRidePreferences('{"version":1,"providers":["Rapido","Uber","Uber","removed"]}'),
+  { version: 1, providers: ['Uber', 'Rapido'] });
+for (const provider of rideProviders) {
+  assert.ok(fs.statSync(new URL(`../assets/images/rideshare/${provider.toLowerCase()}.jpg`, import.meta.url)).size > 0);
+}
+for (const language of languages) assert.match(language.flag, /^\p{Regional_Indicator}{2}$/u);
+console.log('Onboarding completion, saved selection validation, provider order, logos, and language flags passed.');

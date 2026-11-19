@@ -1,5 +1,6 @@
 import { colors } from '@/theme';
-import { Pressable, Text, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, type StyleProp, type ViewStyle } from 'react-native';
+import { Text } from '@/components/localized-text';
 
 export function Action({ label, onPress, disabled = false, secondary = false, destructive = false, style }: {
   label: string; onPress: () => void; disabled?: boolean; secondary?: boolean;

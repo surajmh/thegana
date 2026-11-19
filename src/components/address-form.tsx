@@ -3,7 +3,8 @@ import { Host, TextInput } from '@expo/ui';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { useCallback, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { Text } from '@/components/localized-text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Action } from '@/components/action';
 import { FormPopup } from '@/components/form-popup';
@@ -20,7 +21,7 @@ export function AddressForm({ addressId, onClose }: {
   onClose: () => void;
 }) {
   const insets = useSafeAreaInsets();
-  const { t } = useLanguage();
+  const { t, direction } = useLanguage();
   const editing = addressId !== undefined;
   const [initial] = useState<{ item?: Address; error?: MessageKey }>(() => {
     if (!editing) return {};
@@ -136,18 +137,20 @@ export function AddressForm({ addressId, onClose }: {
       </View>
       <View style={{ gap: 10 }}>
         <Text style={{ fontSize: 22, fontWeight: '600', color: colors.ink }}>{t('placeName')}</Text>
-        <Host matchContents={{ vertical: true }} colorScheme="light" style={{ width: '100%' }}>
+        <Host matchContents={{ vertical: true }} colorScheme="light" style={{ width: '100%' }}
+          layoutDirection={direction === 'rtl' ? 'rightToLeft' : 'leftToRight'}>
           <TextInput defaultValue={initial.item?.name ?? ''} onChangeText={setName} placeholder={t('namePlaceholder')} editable={!saving}
-            maxLength={120} testID="address-name"
+            maxLength={120} testID="address-name" textAlign={direction === 'rtl' ? 'right' : 'left'}
             style={{ width: '100%', padding: 18, borderRadius: 14, borderWidth: 1, borderColor: colors.inputBorder, backgroundColor: colors.surface }}
             textStyle={{ fontSize: 23, color: colors.ink }} />
         </Host>
       </View>
       <View style={{ gap: 10 }}>
         <Text style={{ fontSize: 22, fontWeight: '600', color: colors.ink }}>{t('fullAddress')}</Text>
-        <Host matchContents={{ vertical: true }} colorScheme="light" style={{ width: '100%' }}>
+        <Host matchContents={{ vertical: true }} colorScheme="light" style={{ width: '100%' }}
+          layoutDirection={direction === 'rtl' ? 'rightToLeft' : 'leftToRight'}>
           <TextInput defaultValue={initial.item?.address ?? ''} onChangeText={setAddress} placeholder={t('addressPlaceholder')} editable={!saving}
-            multiline numberOfLines={4} maxLength={2000} testID="actual-address"
+            multiline numberOfLines={4} maxLength={2000} testID="actual-address" textAlign={direction === 'rtl' ? 'right' : 'left'}
             style={{ width: '100%', padding: 18, borderRadius: 14, borderWidth: 1, borderColor: colors.inputBorder, backgroundColor: colors.surface }}
             textStyle={{ fontSize: 22, color: colors.ink }} />
         </Host>

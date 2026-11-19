@@ -1,5 +1,6 @@
 import { SymbolView } from 'expo-symbols';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { Text } from '@/components/localized-text';
 import { useLanguage } from '@/i18n/language-provider';
 import { colors } from '@/theme';
 
@@ -8,7 +9,7 @@ export function PopupHeader({ title, onClose, disabled = false }: {
 }) {
   const { t } = useLanguage();
   return <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12,
-    paddingLeft: 24, paddingRight: 12, paddingVertical: 8,
+    paddingStart: 24, paddingEnd: 12, paddingVertical: 8,
     borderBottomWidth: 1, borderBottomColor: colors.border }}>
     <Text role="heading" style={{ flex: 1, fontSize: 25, fontWeight: '700', color: colors.ink }}>{title}</Text>
     <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel={t('closeToList')}

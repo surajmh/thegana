@@ -2,7 +2,8 @@ import { colors } from '@/theme';
 import * as Clipboard from 'expo-clipboard';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import { Text } from '@/components/localized-text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Action } from '@/components/action';
 import { AddressRow } from '@/components/address-row';
@@ -111,6 +112,7 @@ export default function Home() {
     </View>
     <RideshareSheet visible={rideAddress !== null} busy={openingRide} error={rideError ? t('rideFailed', { provider: rideError }) : null}
       onDismiss={() => setRideAddress(null)}
+      onManage={() => { setRideAddress(null); router.push('/rideshares'); }}
       onChoose={provider => { if (rideAddress) void ride(provider, rideAddress); }} />
   </View>;
 }

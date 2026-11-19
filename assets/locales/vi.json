@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Địa chỉ của tôi",
+    "NSCameraUsageDescription": "Cho phép dùng máy ảnh để chụp địa điểm.",
+    "NSPhotoLibraryUsageDescription": "Chọn ảnh để dễ nhận ra địa điểm đã lưu."
+  },
+  "android": {
+    "app_name": "Địa chỉ của tôi"
+  }
+}

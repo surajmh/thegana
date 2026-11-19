@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "எனது முகவரிகள்",
+    "NSCameraUsageDescription": "இடத்தைப் புகைப்படம் எடுக்க கேமராவை அணுக அனுமதிக்கவும்.",
+    "NSPhotoLibraryUsageDescription": "சேமித்த இடத்தை அடையாளம் காண உதவும் புகைப்படத்தைத் தேர்ந்தெடுக்கவும்."
+  },
+  "android": {
+    "app_name": "எனது முகவரிகள்"
+  }
+}

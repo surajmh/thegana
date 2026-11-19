@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "អាសយដ្ឋានរបស់ខ្ញុំ",
+    "NSCameraUsageDescription": "អនុញ្ញាតឱ្យប្រើកាមេរ៉ាដើម្បីថតរូបទីកន្លែង។",
+    "NSPhotoLibraryUsageDescription": "ជ្រើសរើសរូបថតដើម្បីងាយស្គាល់ទីកន្លែងដែលបានរក្សាទុក។"
+  },
+  "android": {
+    "app_name": "អាសយដ្ឋានរបស់ខ្ញុំ"
+  }
+}

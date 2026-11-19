@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "میرے پتے",
+    "NSCameraUsageDescription": "کسی جگہ کی تصویر کھینچنے کے لیے کیمرے کی اجازت دیں۔",
+    "NSPhotoLibraryUsageDescription": "محفوظ کردہ جگہ پہچاننے کے لیے تصویر منتخب کریں۔"
+  },
+  "android": {
+    "app_name": "میرے پتے"
+  }
+}

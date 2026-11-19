@@ -2,11 +2,12 @@ import '@/utils/storage';
 import { useLocales } from 'expo-localization';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { Platform } from 'react-native';
-import { isLanguage, resolveLanguage, translate, type Language, type Translator } from './messages';
+import { isLanguage, languageDirection, resolveLanguage, translate, type Language, type Translator } from './messages';
 
 const preferenceKey = 'addressbook.language.v1';
 const LanguageContext = createContext<{
   language: Language;
+  direction: 'rtl' | 'ltr';
   preference: Language | null;
   setLanguage: (language: Language | null) => void;
   t: Translator;
@@ -21,6 +22,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     } catch { return null; }
   });
   const language = preference ?? resolveLanguage(locales.map(locale => locale.languageTag));
+  const direction = languageDirection(language);
   const t: Translator = useCallback((key, values) => translate(language, key, values), [language]);
   const setLanguage = useCallback((next: Language | null) => {
     if (next === null) localStorage.removeItem(preferenceKey);
@@ -29,10 +31,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (Platform.OS === 'web') document.documentElement.lang = language;
-  }, [language]);
+    if (Platform.OS === 'web') {
+      document.documentElement.lang = language;
+      document.documentElement.dir = direction;
+    }
+  }, [language, direction]);
 
-  return <LanguageContext.Provider value={{ language, preference, setLanguage, t }}>
+  return <LanguageContext.Provider value={{ language, direction, preference, setLanguage, t }}>
     {children}
   </LanguageContext.Provider>;
 }

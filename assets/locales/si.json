@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "මගේ ලිපින",
+    "NSCameraUsageDescription": "ස්ථානයක ඡායාරූපයක් ගැනීමට කැමරාවට ප්‍රවේශය ලබා දෙන්න.",
+    "NSPhotoLibraryUsageDescription": "සුරැකි ස්ථානයක් හඳුනා ගැනීමට ඡායාරූපයක් තෝරන්න."
+  },
+  "android": {
+    "app_name": "මගේ ලිපින"
+  }
+}

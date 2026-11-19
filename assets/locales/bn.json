@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "আমার ঠিকানা",
+    "NSCameraUsageDescription": "কোনো জায়গার ছবি তুলতে ক্যামেরা ব্যবহারের অনুমতি দিন।",
+    "NSPhotoLibraryUsageDescription": "সংরক্ষিত জায়গা চিনতে সাহায্য করার জন্য একটি ছবি বেছে নিন।"
+  },
+  "android": {
+    "app_name": "আমার ঠিকানা"
+  }
+}

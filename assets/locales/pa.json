@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "ਮੇਰੇ ਪਤੇ",
+    "NSCameraUsageDescription": "ਕਿਸੇ ਥਾਂ ਦੀ ਫ਼ੋਟੋ ਖਿੱਚਣ ਲਈ ਕੈਮਰੇ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ।",
+    "NSPhotoLibraryUsageDescription": "ਸੰਭਾਲੀ ਹੋਈ ਥਾਂ ਪਛਾਣਨ ਲਈ ਫ਼ੋਟੋ ਚੁਣੋ।"
+  },
+  "android": {
+    "app_name": "ਮੇਰੇ ਪਤੇ"
+  }
+}

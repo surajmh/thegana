@@ -47,14 +47,17 @@
           "supportedLocales": [
             "ne",
             "en",
-            "ru",
             "hi",
-            "ja",
-            "it",
-            "fr",
-            "es"
+            "es",
+            "vi",
+            "km",
+            "ur",
+            "bn",
+            "ta",
+            "si",
+            "pa"
           ],
-          "supportsRTL": false
+          "supportsRTL": true
         }
       ]
     ],
@@ -66,12 +69,15 @@
     "locales": {
       "ne": "./assets/locales/ne.json",
       "en": "./assets/locales/en.json",
-      "ru": "./assets/locales/ru.json",
       "hi": "./assets/locales/hi.json",
-      "ja": "./assets/locales/ja.json",
-      "it": "./assets/locales/it.json",
-      "fr": "./assets/locales/fr.json",
-      "es": "./assets/locales/es.json"
+      "es": "./assets/locales/es.json",
+      "vi": "./assets/locales/vi.json",
+      "km": "./assets/locales/km.json",
+      "ur": "./assets/locales/ur.json",
+      "bn": "./assets/locales/bn.json",
+      "ta": "./assets/locales/ta.json",
+      "si": "./assets/locales/si.json",
+      "pa": "./assets/locales/pa.json"
     }
   }
 }

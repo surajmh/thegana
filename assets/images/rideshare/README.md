@@ -7,3 +7,11 @@ Retrieved from Apple's lookup API on 2026-11-19:
 - Yango: https://apps.apple.com/app/id1437157286
 
 Logos and trademarks belong to their respective owners.
+
+Additional official artwork retrieved from Apple's lookup API on 2026-11-20:
+
+- Ola: https://apps.apple.com/app/id539179365
+- Rapido: https://apps.apple.com/app/id1198464606
+- Grab: https://apps.apple.com/app/id647268330
+- Gojek: https://apps.apple.com/app/id944875099
+- Careem: https://apps.apple.com/app/id592978487
