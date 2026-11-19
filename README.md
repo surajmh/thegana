@@ -1,6 +1,14 @@
 # मेरो ठेगाना · Address book
 
-An Expo app for older Nepali-speaking users. Save a place once, then recognize its photo and Nepali name and tap the row to copy the full address for Uber, Pathao, inDrive, or Yango.
+An Expo address book for older users and multilingual communities. Save a place once, then recognize its photo and name and tap the row to copy the full address for Uber, Pathao, inDrive, or Yango.
+
+## Languages
+
+The interface supports Nepali, English, Russian, Hindi, Japanese, Italian, French, and Spanish. Tap the globe and language name in the list header to choose a language, or use the phone's language. The app uses the first supported device language, falling back to English. An explicit choice is saved separately from addresses and survives restarts.
+
+Names, addresses, photos, and rideshare brand names are kept exactly as entered. Switching interface languages does not translate or rewrite saved content. Interface text, validation, errors, accessibility labels, and both deletion confirmations share the typed catalog in `src/i18n/messages.ts`. Add and edit continue to use the same form and popup.
+
+Native app names and iOS camera/photo permission descriptions are configured for all eight languages in `assets/locales/`. Native system text follows the device/per-app system language and requires a new development/production build; Expo Go uses its own system prompts. The in-app picker works in SDK 58 Expo Go after reloading. Every catalog must supply every message key and preserve interpolation placeholders; `npm test` checks these and the native locale resources.
 
 ## Run
 
@@ -14,7 +22,7 @@ Scan the QR code with an Expo Go version that supports SDK 58. Press `a` for And
 ## Use
 
 1. Tap **ठेगाना थप्नुहोस्** to slide up the new-address popup. Swipe down from the handle or use the close icon at the top right to return to the list without saving.
-2. Optionally take a photo with Camera or choose one from Gallery, then enter a Nepali place name and the full address.
+2. Optionally take a photo with Camera or choose one from Gallery, then enter a place name and the full address in any language.
 3. Save. Tap the saved row to copy the actual address.
 4. A popup shows the Uber, Pathao, inDrive, and Yango logos and names. Choose a service. The address is copied again before opening it; paste it into the destination field if needed. Swipe down, tap outside, or tap **बन्द गर्नुहोस्** to dismiss the popup.
 
@@ -30,9 +38,9 @@ Tap and hold an address to edit it in the same popup, with its name, address, an
 
 Edit mode has Save and a red **हटाउनुहोस्** button side by side in a fixed footer below the scrolling fields. Delete asks for confirmation naming the saved place. Cancel keeps the form and any unsaved edits; confirming returns to the list. Add mode shows only Save in the same footer.
 
-Black text and buttons, white surfaces, and a small grayscale palette keep the interface clear. Photos and official rideshare logos retain their colors for recognition. Large touch targets, scalable text, Nepali instructions, and a copy confirmation make the main task easy to follow. Addresses are stored locally using Expo SQLite's localStorage implementation. Photos are copied into the app's documents directory; web previews store image data in browser storage. Failed saves preserve the form. Failed reads block new entries to protect existing data.
+Black text and buttons, white surfaces, and a small grayscale palette keep the interface clear. Photos and official rideshare logos retain their colors for recognition. Large touch targets, scalable text, translated instructions, and a copy confirmation make the main task easy to follow. Addresses are stored locally using Expo SQLite's localStorage implementation. Photos are copied into the app's documents directory; web previews store image data in browser storage. Failed saves preserve the form. Failed reads block new entries to protect existing data.
 
-Saved data stays on this device. Opening Uber passes the selected name and address in its destination link. Uninstalling the app or clearing storage removes saved addresses. There is no account or cloud backup. Use the phone's Nepali keyboard for names; the app does not translate or geocode addresses.
+Saved data stays on this device. Opening Uber passes the selected name and address in its destination link. Uninstalling the app or clearing storage removes saved addresses. There is no account or cloud backup. Use a keyboard for your preferred language; the app does not translate or geocode saved addresses.
 
 ## Checks
 
