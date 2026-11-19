@@ -1,56 +1,46 @@
-# Welcome to your Expo app 👋
+# मेरो ठेगाना · Address book
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+An Expo app for older Nepali-speaking users. Save a place once, then recognize its photo and Nepali name and tap the row to copy the full address for Uber, Pathao, inDrive, or Yango.
 
-## Get started
+## Run
 
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```sh
+npm install
+npm start
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+Scan the QR code with an Expo Go version that supports SDK 58. Press `a` for Android or `i` for iOS when a simulator is available. `npm run web` opens a browser preview.
 
-### Other setup steps
+## Use
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+1. Tap **ठेगाना थप्नुहोस्** to slide up the new-address popup. Swipe down from the handle or use the close icon at the top right to return to the list without saving.
+2. Optionally take a photo with Camera or choose one from Gallery, then enter a Nepali place name and the full address.
+3. Save. Tap the saved row to copy the actual address.
+4. A popup shows the Uber, Pathao, inDrive, and Yango logos and names. Choose a service. The address is copied again before opening it; paste it into the destination field if needed. Swipe down, tap outside, or tap **बन्द गर्नुहोस्** to dismiss the popup.
 
-## Learn more
+Uber receives the destination text through its existing universal link (confirm the destination in Uber). On Android, Pathao, inDrive, and Yango open directly by package name; if launching fails, their Play Store listing opens, with a browser listing as a fallback when Play Store is unavailable. On iOS, Pathao and inDrive try their app schemes before falling back to their App Store listings; Yango uses its official universal link with an App Store fallback. inDrive's legacy iOS scheme still needs device verification. Paste the copied address in these three apps. No ride is booked automatically. Web previews retain the provider website/universal-link flow.
 
-To learn more about developing your project with Expo, look at the following resources:
+Android uses `expo-intent-launcher` and a config plugin declaring visibility of only these three packages. Rebuild the development/production app after this change so both the native module and manifest queries are included; Expo Go does not use this project's manifest queries.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Link references: [Uber deep links](https://developer.uber.com/docs/riders/ride-requests/tutorials/deep-links/introduction), [Pathao car link](https://pathao.go.link/car), [inDrive](https://indrive.com/), [Yango integration](https://yango.com/en_int/partner-program/documentation/).
 
-## Join the community
+Swipe an address row to the right to reveal the trash button. Tap **हटाउनुहोस्** to show the same confirmation as the edit popup; the address is only removed after confirming. Screen readers also expose this confirmed delete action on the row.
 
-Join our community of developers creating universal apps.
+Tap and hold an address to edit it in the same popup, with its name, address, and photo filled in. Save updates the existing entry; close or swipe down to cancel. Screen readers also expose an edit action. Add and edit share `AddressForm` and `FormPopup`.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Edit mode has Save and a red **हटाउनुहोस्** button side by side in a fixed footer below the scrolling fields. Delete asks for confirmation naming the saved place. Cancel keeps the form and any unsaved edits; confirming returns to the list. Add mode shows only Save in the same footer.
+
+Black text and buttons, white surfaces, and a small grayscale palette keep the interface clear. Photos and official rideshare logos retain their colors for recognition. Large touch targets, scalable text, Nepali instructions, and a copy confirmation make the main task easy to follow. Addresses are stored locally using Expo SQLite's localStorage implementation. Photos are copied into the app's documents directory; web previews store image data in browser storage. Failed saves preserve the form. Failed reads block new entries to protect existing data.
+
+Saved data stays on this device. Opening Uber passes the selected name and address in its destination link. Uninstalling the app or clearing storage removes saved addresses. There is no account or cloud backup. Use the phone's Nepali keyboard for names; the app does not translate or geocode addresses.
+
+## Checks
+
+```sh
+npm test
+npm run typecheck
+npm run lint
+npx expo-doctor
+```
+
+Device checks: add entries with and without photos, restart the app, tap a row, and paste into another app. Try all four services with and without their apps installed, verify the destination (including Nepali text), and return to copy a different address. Check large system text and the keyboard on the add screen. Native clipboard, provider handoff, and photo persistence need a phone or simulator for final verification.

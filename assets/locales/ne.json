@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "मेरो ठेगाना",
+    "NSCameraUsageDescription": "ठेगानाको फोटो खिच्न क्यामेरा प्रयोग गर्न दिनुहोस्।",
+    "NSPhotoLibraryUsageDescription": "ठेगाना चिन्नका लागि फोटो छान्नुहोस्।"
+  },
+  "android": {
+    "app_name": "मेरो ठेगाना"
+  }
+}

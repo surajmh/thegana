@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Мои адреса",
+    "NSCameraUsageDescription": "Разрешите доступ к камере, чтобы сфотографировать место.",
+    "NSPhotoLibraryUsageDescription": "Выберите фото, чтобы легче узнавать сохранённое место."
+  },
+  "android": {
+    "app_name": "Мои адреса"
+  }
+}

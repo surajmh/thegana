@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "住所録",
+    "NSCameraUsageDescription": "場所の写真を撮るためにカメラへのアクセスを許可してください。",
+    "NSPhotoLibraryUsageDescription": "保存した場所を見分けるための写真を選んでください。"
+  },
+  "android": {
+    "app_name": "住所録"
+  }
+}

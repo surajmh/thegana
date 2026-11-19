@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Mis direcciones",
+    "NSCameraUsageDescription": "Permita el acceso a la cámara para fotografiar un lugar.",
+    "NSPhotoLibraryUsageDescription": "Elija una foto para reconocer un lugar guardado."
+  },
+  "android": {
+    "app_name": "Mis direcciones"
+  }
+}

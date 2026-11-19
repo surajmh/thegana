@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "My addresses",
+    "NSCameraUsageDescription": "Allow camera access to take a photo of a place.",
+    "NSPhotoLibraryUsageDescription": "Choose a photo to help recognize a saved place."
+  },
+  "android": {
+    "app_name": "My addresses"
+  }
+}

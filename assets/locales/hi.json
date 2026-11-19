@@ -1,0 +1,10 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "मेरे पते",
+    "NSCameraUsageDescription": "जगह की फ़ोटो लेने के लिए कैमरे की अनुमति दें।",
+    "NSPhotoLibraryUsageDescription": "सेव की गई जगह पहचानने के लिए फ़ोटो चुनें।"
+  },
+  "android": {
+    "app_name": "मेरे पते"
+  }
+}
